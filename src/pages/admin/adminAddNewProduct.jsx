@@ -196,6 +196,7 @@ export default function AddProductPage() {
 								<option value="cream">Cream</option>
 								<option value="lotion">Lotion</option>
 								<option value="serum">Serum</option>
+								<option value="shampoo">Shampoo</option>
 							</select>
 						</label>
 

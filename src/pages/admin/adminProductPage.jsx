@@ -4,22 +4,26 @@ import { CiCirclePlus } from "react-icons/ci";
 import { FaRegEdit } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
+import { Loader } from "../../components/loader";
+import toast from "react-hot-toast";
 
 function ProductDeleteConfirm(props){
   const productId = props.productId;
   const close = props.close;
+  const refresh = props.refresh;
   function deleteProduct(){
     const token = localStorage.getItem("token");
     axios
         .delete(import.meta.env.VITE_API_URL + "/api/products/"+productId,{
           headers: {
-            Authorization: 'Bearer ${token}'
+            Authorization: `Bearer ${token}`
           }
         })
         .then((response)=>{
           console.log(response.data);
           close();
           toast.success("Product deleted successfully");
+          refresh();
         }).catch((error)=>{
           toast.error("Failed to delete product")
         })
@@ -51,23 +55,25 @@ export default function AdminProductPage() {
   const [products, setProducts] = useState([]);
   const [IsDeleteConfirmVisible, setIsDeleteConfirmVisible] = useState(false)
   const [productToDelete,setProductToDelete] =useState(null);
-  const [IsLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
   const navigate = useNavigate()
 
   useEffect(() => {
+    if(isLoading){
     axios
-      .get(import.meta.env.VITE_API_URL + "/api/products")
+      .get(import.meta.env.VITE_API_URL+"/api/products")
       .then((response) => {
         console.log(response.data);
         setProducts(response.data);
         setIsLoading(false);
       });
-  }, [IsLoading]);
+    }
+  }, [isLoading]);
 
   return (
     <div className="w-full min-h-full">
       {
-        IsDeleteConfirmVisible && <ProductDeleteConfirm productId={productToDelete} close= {()=>{setIsDeleteConfirmVisible(false)}}/>
+        IsDeleteConfirmVisible && <ProductDeleteConfirm refresh={()=>{setIsLoading(true)}} productId={productToDelete} close= {()=>{setIsDeleteConfirmVisible(false)}}/>
       }
       
       <Link
@@ -90,7 +96,7 @@ export default function AdminProductPage() {
 
           {/* Table wrapper for responsive scrolling */}
           <div className="overflow-x-auto">
-            {IsLoading?<p>Loading</p>:
+            {isLoading?<Loader/>:
             <table className="w-full min-w-[880px] text-left">
               <thead className="bg-secondary text-white">
                 <tr>
