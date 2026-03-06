@@ -44,8 +44,8 @@ export default function Header() {
 							<a href="/contact" className="p-4 border-b border-secondary/10">
 								Contact
 							</a>
-							<a href="/admin " className="p-4 border-b border-secondary/10">
-								Admin  
+							<a href="/about " className="p-4 border-b border-secondary/10">
+								About  
 							</a>
 							<a href="/cart" className="p-4 border-b border-secondary/10">
 								Cart
@@ -61,7 +61,7 @@ export default function Header() {
                     <Link to="/">Home</Link>
                     <Link to="/products">Products</Link>
                     <Link to="/contact">Contact</Link>
-                    <Link to="/admin">Admin </Link>
+                    <Link to="/about">About </Link>
                 </div>
 				<div className="h-full hidden lg:flex w-[200px] absolute right-[100px] top-0  justify-end items-center gap-4">
 					<UserData/>

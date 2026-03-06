@@ -151,6 +151,14 @@ export default function UserData() {
              
               <div className="my-1 h-px bg-secondary/10" />
               <MenuItem
+                onClick={() => (window.location.href = "/account")}
+                label="Account Settings"
+              />
+              <MenuItem
+                onClick={() => (window.location.href = "/admin")}
+                label="Admin"
+              />
+              <MenuItem
                 destructive
                 onClick={handleLogout}
                 label="Logout"
