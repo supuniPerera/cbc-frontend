@@ -151,7 +151,7 @@ export default function UserData() {
              
               <div className="my-1 h-px bg-secondary/10" />
               <MenuItem
-                onClick={() => (window.location.href = "/account")}
+                onClick={() => (window.location.href = "/settings")}
                 label="Account Settings"
               />
               <MenuItem
