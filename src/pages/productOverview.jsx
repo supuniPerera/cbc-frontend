@@ -32,7 +32,7 @@ export default function ProductOverview(){
    
 
     return(
-    <div className="w-full lg:h-[calc(100vh-100px)] text-secondary bg-primary">
+    <div className="w-full lg:h-full text-secondary bg-primary">
 			{Status == "loading" && <Loader />}
 			{Status == "success" && (
 				<div className="w-full flex flex-col lg:flex-row p-10">
@@ -54,7 +54,7 @@ export default function ProductOverview(){
                             }
                         </h1>
                         {/* description */}
-                        <p className="mt-[30px] text-justify">{product.description}</p>
+                        <p className="mt-[30px] max-h-[150px] overflow-y-auto text-justify">{product.description}</p>
                         {/* category */}
                         <p >Category: {product.category}</p>
                         {/* price */}

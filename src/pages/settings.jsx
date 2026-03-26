@@ -34,27 +34,39 @@ export default function UserSettings() {
 
 	// No-ops per your spec (wire your API calls here)
 	async function updateUserData() {
-        const data = {
-            firstName: firstName,
-            lastName: lastName,
-            image : user.image
-        }
-        if(image !=null){
+    let currentImageUrl = user.image; 
+
+    
+    if (image != null) {
+        try {
             const link = await mediaUpload(image);
-            image.profilePicture = link;
+            currentImageUrl = link; 
+        } catch (err) {
+            toast.error("Image upload failed");
+            return;
         }
+    }
 
-        await axios.put(import.meta.env.VITE_API_URL + "/api/users/me", data,{
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }).then(()=>{
-            alert("Profile updated successfully");
-        }).catch((err)=>{
-            console.error("Error updating profile:", err);
-            alert("Failed to update profile");
-        })
-        navigate("/")
-
+    
+    const data = {
+        firstName: firstName,
+        lastName: lastName,
+        image: currentImageUrl 
     };
+
+    
+    await axios.put(import.meta.env.VITE_API_URL + "/api/users/me", data, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    }).then((res) => {
+        
+        setUser(res.data.user); 
+        alert("Profile updated successfully");
+        navigate("/");
+    }).catch((err) => {
+        console.error("Error updating profile:", err);
+        alert("Failed to update profile");
+    });
+};
 	async function updatePassword() {
         if (password !== confirmPassword) {
             toast.error("Passwords do not match");
